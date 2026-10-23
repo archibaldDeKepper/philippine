@@ -66,6 +66,17 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4.4vw,44px);l
 .stop small{font-variant-numeric:tabular-nums;letter-spacing:.08em}
 .track-legend{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);letter-spacing:.1em;margin-top:28px}
 
+
+button.stop{appearance:none;background:none;border:0;padding:0;font:inherit;font-size:12px;color:var(--muted);cursor:pointer}
+button.stop:hover,button.stop:focus-visible{color:var(--fg)}
+button.stop:hover i,button.stop:focus-visible i{background:var(--gold);transform:rotate(45deg) scale(1.35)}
+button.stop i{transition:transform .2s ease,background .2s ease}
+button.stop:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+.step,.earlier article{scroll-margin-top:90px}
+.flash{animation:flash 2.2s ease}
+@keyframes flash{0%,35%{background:color-mix(in srgb,var(--gold) 16%,transparent)}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){.flash{animation:none;outline:1px solid var(--gold)}}
+
 /* Journey */
 .house{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:8px}
 .house h3{font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:.14em;text-transform:uppercase;margin:0}
@@ -178,14 +189,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
     </div>
     <div class="track" aria-label="Career progression from 2017 to today">
       <div class="track-line">
-        <div class="stop minor" style="left:5%"><small>2017</small><i></i>Dior Parfums</div>
-        <div class="stop minor" style="left:25%"><small>2019</small><i></i>Dinh Van</div>
-        <div class="stop minor" style="left:45%"><small>2021</small><i></i>Nota Bene</div>
-        <div class="stop on" style="left:56%"><small>2022</small><i></i>Cartier</div>
-        <div class="stop on minor" style="left:68%"><small>2023</small><i></i>CRM & E-com</div>
-        <div class="stop on" style="left:84%"><small>2024</small><i></i>Client Dev.</div>
+        <button type="button" class="stop minor" style="left:5%" data-go="j-dior" aria-label="2017, Dior Parfums: see details"><small>2017</small><i></i>Dior Parfums</button>
+        <button type="button" class="stop minor" style="left:25%" data-go="j-dinhvan" aria-label="2019, Dinh Van: see details"><small>2019</small><i></i>Dinh Van</button>
+        <button type="button" class="stop minor" style="left:45%" data-go="j-notabene" aria-label="2021, Nota Bene: see details"><small>2021</small><i></i>Nota Bene</button>
+        <button type="button" class="stop on" style="left:56%" data-go="j-transversal" aria-label="2022, Cartier: see details"><small>2022</small><i></i>Cartier</button>
+        <button type="button" class="stop on minor" style="left:68%" data-go="j-crm" aria-label="2023, CRM & E-com: see details"><small>2023</small><i></i>CRM & E-com</button>
+        <button type="button" class="stop on" style="left:84%" data-go="j-client" aria-label="2024, Client Dev.: see details"><small>2024</small><i></i>Client Dev.</button>
       </div>
-      <div class="track-legend"><span>Madrid</span><span>Today</span></div>
+      <div class="track-legend"><span>Click a milestone to see the details</span><span>Today</span></div>
     </div>
   </section>
 
@@ -194,7 +205,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
     <p class="lede">Since 2022 at Cartier Iberia, from client activations to leading the local client strategy alongside the CEO.</p>
     <div class="house"><h3>Cartier</h3><p>Richemont Iberia · Madrid · 2022 – today</p></div>
     <ol class="steps">
-      <li class="step now">
+      <li class="step now" id="j-client">
         <div class="step-head"><h4>Client Development Project Manager</h4><span class="when">Oct 2024 – today</span></div>
         <ul>
           <li>Defines and deploys the local client & CRM strategy for Iberia, in line with the Maison's international objectives</li>
@@ -205,7 +216,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
           <li>Works with MCC and Commercial teams on a seamless client journey; tracks engagement and event KPIs with boutiques</li>
         </ul>
       </li>
-      <li class="step">
+      <li class="step" id="j-crm">
         <div class="step-head"><h4>CRM & E-commerce Coordinator</h4><span class="when">Jan 2023 – Oct 2024</span></div>
         <ul>
           <li>Planned and executed omnichannel CRM campaigns and digital activations; built automated client outreach</li>
@@ -214,7 +225,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
           <li>Weekly and monthly CRM & e-commerce KPI reporting</li>
         </ul>
       </li>
-      <li class="step">
+      <li class="step" id="j-transversal">
         <div class="step-head"><h4>Transversal Projects Coordinator</h4><span class="when">Jan – Aug 2022</span></div>
         <ul>
           <li>Organisation and logistics of local cross-functional client activations</li>
@@ -224,9 +235,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
     </ol>
     <div class="rule">Before Cartier</div>
     <div class="earlier">
-      <article><span class="when">2021</span><h5>Communication Strategy Intern</h5><div class="co">Nota Bene, Madrid</div><p>Bespoke client events aligned with each brand identity; social media and press strategies.</p></article>
-      <article><span class="when">2019</span><h5>Boutique Assistant</h5><div class="co">Dinh Van, Madrid</div><p>Client welcome, visual merchandising and window displays.</p></article>
-      <article><span class="when">2017</span><h5>Marketing & Communication Intern</h5><div class="co">Dior Parfums, Madrid</div><p>A first look at luxury marketing, from the inside.</p></article>
+      <article id="j-notabene"><span class="when">2021</span><h5>Communication Strategy Intern</h5><div class="co">Nota Bene, Madrid</div><p>Bespoke client events aligned with each brand identity; social media and press strategies.</p></article>
+      <article id="j-dinhvan"><span class="when">2019</span><h5>Boutique Assistant</h5><div class="co">Dinh Van, Madrid</div><p>Client welcome, visual merchandising and window displays.</p></article>
+      <article id="j-dior"><span class="when">2017</span><h5>Marketing & Communication Intern</h5><div class="co">Dior Parfums, Madrid</div><p>A first look at luxury marketing, from the inside.</p></article>
     </div>
   </section>
 
@@ -320,6 +331,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
         var n=(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
         show(ids[n],true);e.preventDefault();
       }
+    });
+  });
+  [].slice.call(document.querySelectorAll('button.stop')).forEach(function(b){
+    b.addEventListener('click',function(){
+      show('journey');
+      var el=document.getElementById(b.getAttribute('data-go'));
+      if(!el)return;
+      var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      requestAnimationFrame(function(){
+        el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+        el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');
+      });
     });
   });
   show((location.hash||'').slice(1));
