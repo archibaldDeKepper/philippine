@@ -85,6 +85,17 @@ button.stop:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
 @keyframes flash{0%,35%{background:color-mix(in srgb,var(--gold) 16%,transparent)}100%{background:transparent}}
 @media (prefers-reduced-motion:reduce){.flash{animation:none;outline:1px solid var(--gold)}}
 
+
+.back{position:fixed;z-index:20;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;appearance:none;border:1px solid var(--gold);background:var(--bg);color:var(--fg);padding:13px 18px;font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.18);animation:rise .3s ease both}
+.back span{color:var(--gold);font-size:14px;letter-spacing:0}
+.back:hover{background:var(--gold);color:var(--bg)}
+.back:hover span{color:var(--bg)}
+.back:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.back{animation:none}}
+@media (max-width:760px){.back{right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}}
+.track{scroll-margin-top:90px}
+
 /* Journey */
 .house{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:8px}
 .house h3{font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:.14em;text-transform:uppercase;margin:0}
@@ -198,7 +209,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
       <div class="fact"><b>3</b><span>Working languages: French, English, Spanish</span></div>
       <div class="fact"><b>18.7</b><span>out of 20 for a master's thesis on digitalisation in luxury</span></div>
     </div>
-    <div class="track" aria-label="Career progression from 2017 to today">
+    <div class="track" id="timeline" aria-label="Career progression from 2017 to today">
       <div class="track-line">
         <button type="button" class="stop minor" style="left:5%" data-go="j-dior" aria-label="2017, Dior Parfums: see details"><small>2017</small><i></i>Dior Parfums</button>
         <button type="button" class="stop minor" style="left:25%" data-go="j-dinhvan" aria-label="2019, Dinh Van: see details"><small>2019</small><i></i>Dinh Van</button>
@@ -318,6 +329,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
 </main>
 
+<button type="button" class="back" id="back" hidden><span aria-hidden="true">↑</span>Back to timeline</button>
+
 <footer><div class="wrap"><span>Philippine Marinacce</span><span>Madrid · 2026</span></div></footer>
 
 <script>
@@ -333,6 +346,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
       document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
       if(on&&focus)t.focus();
     });
+    var bk=document.getElementById('back'); if(bk&&id!=='journey')bk.hidden=true;
     try{history.replaceState(null,'','#'+id)}catch(e){}
   }
   tabs.forEach(function(t,i){
@@ -347,6 +361,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   [].slice.call(document.querySelectorAll('button.stop')).forEach(function(b){
     b.addEventListener('click',function(){
       show('journey');
+      document.getElementById('back').hidden=false;
       var el=document.getElementById(b.getAttribute('data-go'));
       if(!el)return;
       var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -354,6 +369,16 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
         el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
         el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');
       });
+    });
+  });
+  document.getElementById('back').addEventListener('click',function(){
+    show('home');
+    var t=document.getElementById('timeline');
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    requestAnimationFrame(function(){
+      t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+      t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash');
+      var first=t.querySelector('button.stop:not([hidden])');
     });
   });
   show((location.hash||'').slice(1));
